@@ -6,7 +6,6 @@ if [[ ! $1 ]]; then
 fi
 
 ROOTDIR=$1
-DEVICEID=$2
 
 if [ $( whoami ) != "root" ]; then
     echo "must run as root"
@@ -42,17 +41,7 @@ checkcreate $SOURCE $NBASE/rc3.d/$NLINK
 checkcreate $SOURCE $NBASE/rc4.d/$NLINK
 checkcreate $SOURCE $NBASE/rc5.d/$NLINK
 
-
-
-#3. add the calmeq device id to /etc/calmeq-device-id *This is device specific*
-if [[ $DEVICEID ]]; then
-    echo "Setting device id"
-    echo $DEVICEID > $ROOTDIR/etc/calmeq-device-id
-else
-    echo "No device id set"
-fi
-
-#4. make sure the ssh tunnel will launch
+#3. make sure the ssh tunnel will launch
 /bin/cp ./calmeq-tunnel.sh $ROOTDIR/etc/network/if-up.d/
 
 # dont modify profile because we'll source everything we need from crontab
